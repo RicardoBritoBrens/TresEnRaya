@@ -9,20 +9,21 @@
     <title>Tres en Raya</title>
 </head>
 
-<body>
-
-    <div class="select-players">
-        <button>Un Jugador vs IA</button>
-        <button>Dos Jugadores</button>
+<body class="body">
+    
+    <div id="select-players-div" class="center-div select-players">
+        <button onclick="onePlayerVsIa()">Un Jugador vs IA</button>
+        <button onclick="twoPlayers()">Dos Jugadores</button>
     </div>
 
-    <div class="select-player-icon">
+    <!-- <div id="select-player-icon-div" class="center-div select-player-icon">
         <h2>Elige pieza de juego</h2>
-        <button>Usar X</button>
-        <button>Usar Y</button>
-    </div>
+        <button onclick="useIconX()">Usar X</button>
+        <button onclick="useIconY()">Usar Y</button>
+    </div> -->
 
-    <div class="board">
+<!-- 
+    <div id="board" class="board center-div">
         <a href="#" class="box fill-div"></a>
         <a href="#" class="box fill-div"></a>
         <a href="#" class="box fill-div"></a>
@@ -33,21 +34,16 @@
         <a href="#" class="box fill-div"></a>
         <a href="#" class="box fill-div"></a>
     </div>
-
-    <div class="info-panel">
+ 
+    <div class="info-panel center-div">
         <h2>You win</h2>
+    </div>        
+  -->
+    <div class="you-win-div">
+        <img src="./assets/gifs/12432.gif" alt="">                
+        <img src="./assets/gifs/12833.gif" alt="">
+        <img src="./assets/gifs/12430.gif" alt="">
     </div>
-
-    <script>
-        function play() {
-          var audio = document.getElementById("audio");
-          audio.play();
-        }
-      </script>
-  
-    <input type="button" value="PLAY" onclick="play()">
-    <audio id="audio" src="./assets/got-it.mp3"></audio>
-  
 
     <script src="index.js"></script>
 </body>
