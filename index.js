@@ -96,7 +96,9 @@ function drawFirstRowWinner(){
     const width = canvas.width;
     const height = canvas.height;
     context.lineWidth = 20;    
-    setupWinnerRow(1, context, width, height);
+    setupWinnerCorner('up-left-to-right-down', context, width, height)
+    //setupWinnerRowHorizontal(1, context, width, height);
+    //setupWinnerRowVertical(1, context, width, height);
     context.strokeStyle = 'green';    
     context.stroke();
 }
@@ -107,7 +109,9 @@ function drawSecondRowWinner(){
     const width = canvas.width;
     const height = canvas.height;
     context.lineWidth = 20;    
-    setupWinnerRow(2, context, width, height);
+    setupWinnerCorner('up-right-to-left-down', context, width, height)
+    //setupWinnerRowHorizontal(2, context, width, height);
+    //setupWinnerRowVertical(2, context, width, height);
     context.strokeStyle = 'green';    
     context.stroke();
 }
@@ -118,18 +122,19 @@ function drawThirdRowWinner(){
     const width = canvas.width;
     const height = canvas.height;
     context.lineWidth = 20;    
-    setupWinnerRow(3, context, width, height);
+    //setupWinnerRowHorizontal(3, context, width, height);
+    //setupWinnerRowVertical(3, context, width, height);
     context.strokeStyle = 'green';    
     context.stroke();
 }
 
-function setupWinnerRow(number, context, width){    
+function setupWinnerRowHorizontal(number, context, width){    
     switch(number) 
     {
         case 1:
             context.beginPath();
-            context.moveTo(width, 100);
-            context.lineTo(0, 100);  
+            context.moveTo(width, 95);
+            context.lineTo(0, 95);  
           break;
         case 2:
             context.beginPath();
@@ -141,17 +146,55 @@ function setupWinnerRow(number, context, width){
             context.moveTo(0, 275);
             context.lineTo(width, 275);
           break;        
+    }      
+}
+
+function setupWinnerRowVertical(number, context, width){    
+    switch(number) 
+    {
+        case 1:
+            context.beginPath();
+            context.moveTo(90, width);
+            context.lineTo(90, 1);
+          break;
+        case 2:
+            context.beginPath();
+            context.moveTo(275, width);
+            context.lineTo(275, 1);
+          break;
+        case 3:
+            context.beginPath();
+            context.moveTo(460, width);
+            context.lineTo(width - 90, 1);
+          break;        
       }      
 }
+
+function setupWinnerCorner(orientation, context, width){    
+    switch(orientation) 
+    {
+        case 'up-left-to-right-down':
+            context.beginPath();
+            context.moveTo(0, 0);
+            context.lineTo(800, 795);
+          break;
+        case 'up-right-to-left-down':
+            context.beginPath();
+            context.moveTo(550, 1);
+            context.lineTo(1,550);
+          break;        
+      }      
+}
+
 // Testing assign icon
-// setClassToLink(0,'o');
-// setClassToLink(1,'x');
-// setClassToLink(2,'o');
+setClassToLink(0,'o');
+setClassToLink(1,'x');
+setClassToLink(2,'o');
 
-// setClassToLink(3,'x');
-// setClassToLink(4,'o');
-// setClassToLink(5,'x');
+setClassToLink(3,'x');
+setClassToLink(4,'o');
+setClassToLink(5,'x');
 
-// setClassToLink(6,'o');
-// setClassToLink(7,'x');
-// setClassToLink(8,'o');
+setClassToLink(6,'o');
+setClassToLink(7,'x');
+setClassToLink(8,'o');
