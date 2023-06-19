@@ -11,6 +11,8 @@ let gameAlreadyStart = false;
 // Players
 let players = 0;
 let playerIcon = '';
+let machineIcon = '';
+let lastMove = '';
 
 // Board
 let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -40,7 +42,7 @@ function completeDraw(){
 
 // Players functions
 function onePlayerVsIa(){    
-    players = 1;
+    players = 1;    
     playAudio('dragonzord-flute');
     setVisibilityToDiv(selectPlayersDivName, 'hide');
     setVisibilityToDiv(selectPlayerIconDivName, 'show');
@@ -55,12 +57,18 @@ function twoPlayers(){
 // Select Icons functions
 function useIconX(){    
     playerIcon = 'x';
+    if(players===1){
+        machineIcon = 'o'
+    }
     playAudio('megaman-3-death-sound-effect');        
     setVisibilityToDiv(selectPlayerIconDivName, 'hide');
     setVisibilityToDiv(boardDivName, 'show');
 }
 function useIconY(){    
-    playerIcon = 'y';
+    playerIcon = 'o';
+    if(players===1){
+        machineIcon = 'x'
+    }
     playAudio('mm4-victory');
     setVisibilityToDiv(selectPlayerIconDivName, 'hide');
     setVisibilityToDiv(boardDivName, 'show');
@@ -90,7 +98,8 @@ function playAudio(audioName) {
 function setClassToLink(index, iconClass){        
     let innerDiv = document.getElementById('board-inner-div');    
     let link = innerDiv.children[index];    
-    link.classList.add(iconClass);    
+    link.classList.add(iconClass);   
+    link.removeAttribute("onclick") 
 }
 
 
@@ -99,12 +108,10 @@ function drawFirstRowWinner(){
     drawHorizontalWinnerGreenLine(1, context, width, height);
     completeDraw();
 }
-
 function drawSecondRowWinner(){   
     drawHorizontalWinnerGreenLine(2, context, width, height);
     completeDraw();
 }
-
 function drawThirdRowWinner(){   
     drawHorizontalWinnerGreenLine(3, context, width, height);
     completeDraw();
@@ -116,12 +123,10 @@ function drawFirstColumnWinner(){
     drawVerticalWinnerGreenLine(1, context, width, height);    
     completeDraw();    
 }
-
 function drawSecondColumnWinner(){          
     drawVerticalWinnerGreenLine(2, context, width, height);    
     completeDraw();
 }
-
 function drawThirdColumnWinner(){ 
     drawVerticalWinnerGreenLine(3, context, width, height);    
     completeDraw();
@@ -133,7 +138,6 @@ function drawUpLeftToRightDownWinner(){
     drawCornerWinnerGreenLine('up-left-to-right-down', context, width);    
     completeDraw();
 }
-
 function drawUpRightToLeftDownWinner(){      
     drawCornerWinnerGreenLine('up-right-to-left-down', context, width);    
     completeDraw();
@@ -161,7 +165,6 @@ function drawHorizontalWinnerGreenLine(number, context, width){
           break;        
     }      
 }
-
 function drawVerticalWinnerGreenLine(number, context, width){    
     switch(number) 
     {
@@ -182,7 +185,6 @@ function drawVerticalWinnerGreenLine(number, context, width){
           break;        
       }      
 }
-
 function drawCornerWinnerGreenLine(orientation, context, width){    
     switch(orientation) 
     {
@@ -199,21 +201,64 @@ function drawCornerWinnerGreenLine(orientation, context, width){
       }      
 }
 
-function markCoordinate(id, coordinates){
-    let currentLink = this.document.getElementById(id);
-    switch (coordinates) {
-        case [0,0]:
-            setClassToLink(0,'o');
+
+// Board movements functions
+function moveTo(id){        
+    switch (id) {
+        case 0:
+            setClassToLink(0, whoTurnIs());
+            board[1] = 1;            
             break;
-        case [0,1]:
-            setClassToLink(1,'x');
+        case 1:
+            setClassToLink(1, whoTurnIs());
+            board[2] = 1;
             break;
-        case [0,2]:
-            setClassToLink(2,'o');
+        case 2:
+            setClassToLink(2, whoTurnIs());
+            board[3] = 1;
             break;
-    
+        case 3:
+            setClassToLink(3, whoTurnIs());
+            board[4] = 1;
+            break;
+        case 4:
+            setClassToLink(4, whoTurnIs());
+            board[4] = 1;
+            break;
+        case 5:
+            setClassToLink(5, whoTurnIs());
+            board[5] = 1;
+            break;    
+        case 6:
+            setClassToLink(6, whoTurnIs());
+            board[6] = 1;
+            break;
+        case 7:
+            setClassToLink(7, whoTurnIs());
+            board[7] = 1;
+            break;
+        case 8:
+            setClassToLink(8, whoTurnIs());
+            board[8] = 1;
+            break;            
         default:
             break;
+    }
+}
+
+function whoTurnIs(){
+    debugger;
+    if(players === 1){
+        let result = playerIcon;        
+         if(playerIcon === 'o'){
+            playerIcon = 'x';
+         }else if(playerIcon === 'x'){
+            playerIcon = 'o';
+         }        
+         return result;
+    }else if (players === 2)
+    {
+        return machineIcon;
     }
 }
 
