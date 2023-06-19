@@ -1,10 +1,3 @@
-// Game Status
-let gameAlreadyStart = false;
-
-// Players
-let players = 0;
-let playerIcon = '';
-
 // Constants
 const selectPlayersDivName = 'select-players-div';
 const selectPlayerIconDivName = 'select-player-icon-div';
@@ -12,8 +5,38 @@ const boardDivName = 'board-div';
 const boardInnerDivName = 'board-inner-div';
 const youWinDivName = 'you-win-div';
 
+// Game Status
+let gameAlreadyStart = false;
+
+// Players
+let players = 0;
+let playerIcon = '';
+
 // Board
 let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+// Canvas
+let canvas;
+let context;
+let width;
+let height;
+
+function setupWinnerCanvas(){
+   canvas = document.getElementById("canvas");
+   context = canvas.getContext("2d");
+   width = canvas.width;
+   height = canvas.height;
+   context.lineWidth = 20;       
+}
+
+function completeDraw(){
+    context.strokeStyle = 'green';    
+    context.stroke(); 
+}
+
+// Setup winner canvas needed to allow drawing
+//setupWinnerCanvas();
+
 
 // Players functions
 function onePlayerVsIa(){    
@@ -60,78 +83,68 @@ function setVisibilityToDiv(divId, visibility)
         currentDiv.style.display = "block";
     }  
 }
-
 function playAudio(audioName) {
     var audio = new Audio(`./assets/sounds/${audioName}.mp3`);
     //audio.play();
 }
-
 function setClassToLink(index, iconClass){        
     let innerDiv = document.getElementById('board-inner-div');    
     let link = innerDiv.children[index];    
     link.classList.add(iconClass);    
 }
 
-function drawWinner(){
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext("2d");
-    const width = canvas.width;
-    const height = canvas.height;
-    context.lineWidth = 20;    
-    context.beginPath();
-    context.moveTo(width, 100);
-    context.lineTo(10, 100);    
-    context.strokeStyle = 'green';    
-    context.stroke();
-}
-//drawWinner();
 
-drawFirstRowWinner();
-drawSecondRowWinner();
-drawThirdRowWinner();
-
-function drawFirstRowWinner(){
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext("2d");
-    const width = canvas.width;
-    const height = canvas.height;
-    context.lineWidth = 20;    
-    setupWinnerCorner('up-left-to-right-down', context, width, height)
-    //setupWinnerRowHorizontal(1, context, width, height);
-    //setupWinnerRowVertical(1, context, width, height);
-    context.strokeStyle = 'green';    
-    context.stroke();
+// Draw winners rows
+function drawFirstRowWinner(){       
+    drawHorizontalWinnerGreenLine(1, context, width, height);
+    completeDraw();
 }
 
-function drawSecondRowWinner(){
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext("2d");
-    const width = canvas.width;
-    const height = canvas.height;
-    context.lineWidth = 20;    
-    setupWinnerCorner('up-right-to-left-down', context, width, height)
-    //setupWinnerRowHorizontal(2, context, width, height);
-    //setupWinnerRowVertical(2, context, width, height);
-    context.strokeStyle = 'green';    
-    context.stroke();
+function drawSecondRowWinner(){   
+    drawHorizontalWinnerGreenLine(2, context, width, height);
+    completeDraw();
 }
 
-function drawThirdRowWinner(){
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext("2d");
-    const width = canvas.width;
-    const height = canvas.height;
-    context.lineWidth = 20;    
-    //setupWinnerRowHorizontal(3, context, width, height);
-    //setupWinnerRowVertical(3, context, width, height);
-    context.strokeStyle = 'green';    
-    context.stroke();
+function drawThirdRowWinner(){   
+    drawHorizontalWinnerGreenLine(3, context, width, height);
+    completeDraw();
 }
 
-function setupWinnerRowHorizontal(number, context, width){    
+
+// Draw winners columns
+function drawFirstColumnWinner(){   
+    drawVerticalWinnerGreenLine(1, context, width, height);    
+    completeDraw();    
+}
+
+function drawSecondColumnWinner(){          
+    drawVerticalWinnerGreenLine(2, context, width, height);    
+    completeDraw();
+}
+
+function drawThirdColumnWinner(){ 
+    drawVerticalWinnerGreenLine(3, context, width, height);    
+    completeDraw();
+}
+
+
+// Draw winner corners
+function drawUpLeftToRightDownWinner(){        
+    drawCornerWinnerGreenLine('up-left-to-right-down', context, width);    
+    completeDraw();
+}
+
+function drawUpRightToLeftDownWinner(){      
+    drawCornerWinnerGreenLine('up-right-to-left-down', context, width);    
+    completeDraw();
+}
+
+
+// Draw main functions
+function drawHorizontalWinnerGreenLine(number, context, width){    
     switch(number) 
     {
-        case 1:
+        case 1:            
             context.beginPath();
             context.moveTo(width, 95);
             context.lineTo(0, 95);  
@@ -149,7 +162,7 @@ function setupWinnerRowHorizontal(number, context, width){
     }      
 }
 
-function setupWinnerRowVertical(number, context, width){    
+function drawVerticalWinnerGreenLine(number, context, width){    
     switch(number) 
     {
         case 1:
@@ -170,7 +183,7 @@ function setupWinnerRowVertical(number, context, width){
       }      
 }
 
-function setupWinnerCorner(orientation, context, width){    
+function drawCornerWinnerGreenLine(orientation, context, width){    
     switch(orientation) 
     {
         case 'up-left-to-right-down':
@@ -186,15 +199,43 @@ function setupWinnerCorner(orientation, context, width){
       }      
 }
 
-// Testing assign icon
-setClassToLink(0,'o');
-setClassToLink(1,'x');
-setClassToLink(2,'o');
+function markCoordinate(id, coordinates){
+    let currentLink = this.document.getElementById(id);
+    switch (coordinates) {
+        case [0,0]:
+            setClassToLink(0,'o');
+            break;
+        case [0,1]:
+            setClassToLink(1,'x');
+            break;
+        case [0,2]:
+            setClassToLink(2,'o');
+            break;
+    
+        default:
+            break;
+    }
+}
 
-setClassToLink(3,'x');
-setClassToLink(4,'o');
-setClassToLink(5,'x');
+// Testing set icon
+//setClassToLink(0,'o');
+//setClassToLink(1,'x');
+//setClassToLink(2,'o');
+//setClassToLink(3,'x');
+//setClassToLink(4,'o');
+//setClassToLink(5,'x');
+//setClassToLink(6,'o');
+//setClassToLink(7,'x');
+//setClassToLink(8,'o');
 
-setClassToLink(6,'o');
-setClassToLink(7,'x');
-setClassToLink(8,'o');
+// testing Done
+//drawFirstRowWinner();
+//drawSecondRowWinner();
+//drawThirdRowWinner();
+
+//drawFirstColumnWinner();
+//drawSecondColumnWinner();
+//drawThirdColumnWinner();
+
+//drawUpLeftToRightDownWinner();
+//drawUpRightToLeftDownWinner();
