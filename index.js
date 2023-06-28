@@ -1,3 +1,9 @@
+const playerss = ['playerOne', 'playerTwo', 'machine'];
+let playerOne = '';
+let playerTwo = '';
+
+let turn = '';
+
 // Constants
 const selectPlayersDivName = "select-players-div";
 const selectPlayerIconDivName = "select-player-icon-div";
@@ -16,7 +22,8 @@ let lastMove = "";
 
 // Board
 //let board = [, 0, 0, 0, 0, 0, 0, 0, 0];
-let board = [[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,'']];
+//let board = [[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,'']];
+let board = [[0,'',''],[0,'',''],[0,'',''],[0,'',''],[0,'',''],[0,'',''],[0,'',''],[0,'',''],[0,'','']];
 
 // Canvas
 let canvas;
@@ -40,14 +47,18 @@ function completeDraw() {
 //setupWinnerCanvas();
 
 // Players functions
-function onePlayerVsIa() {  
+function onePlayerVsIa() {    
   players = 1;
+  playerOne = playerss[0];
+  playerTwo = playerss[2];
   playAudio("dragonzord-flute");
   setVisibilityToDiv(selectPlayersDivName, "hide");
   setVisibilityToDiv(selectPlayerIconDivName, "show");
 }
 function twoPlayers() {
   players = 2;
+  playerOne = playerss[0];
+  playerTwo = playerss[1];  
   playAudio("dragonzord-sound-effect");
   setVisibilityToDiv(selectPlayersDivName, "hide");
   setVisibilityToDiv(selectPlayerIconDivName, "show");
@@ -190,107 +201,52 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
 }
 
 // Board movements functions
-function moveTo(id) {
-  switch (id) {
-    case 0:
-      debugger;
-      setClassToLink(0, getNextPlayerIcon());
-      console.log('Player move');
-      board[0] = 1;     
-      machineAutoMove();      
-      break;
-    case 1:
-      setClassToLink(1, getNextPlayerIcon());
-      board[1] = 1;
-      machineAutoMove(); 
-      break;
-    case 2:
-      setClassToLink(2, getNextPlayerIcon());
-      board[2] = 1;
-      machineAutoMove(); 
-      break;
-    case 3:
-      setClassToLink(3, getNextPlayerIcon());
-      board[3] = 1;
-      machineAutoMove(); 
-      break;
-    case 4:
-      setClassToLink(4, getNextPlayerIcon());
-      board[4] = 1;
-      machineAutoMove(); 
-      break;
-    case 5:
-      setClassToLink(5, getNextPlayerIcon());
-      board[5] = 1;
-      machineAutoMove(); 
-      break;
-    case 6:
-      setClassToLink(6, getNextPlayerIcon());
-      board[6] = 1;
-      machineAutoMove(); 
-      break;
-    case 7:
-      setClassToLink(7, getNextPlayerIcon());
-      board[7] = 1;
-      machineAutoMove(); 
-      break;
-    case 8:
-      setClassToLink(8, getNextPlayerIcon());
-      board[8] = 1;
-      machineAutoMove(); 
-      break;
-    default:
-      break;
-  }
-}
-
-// Board movements functions
 function moveTo(coordinate) {
-  
-  switch (coordinate[0]) {
+  //debugger;
+  switch (coordinate[0]) {    
     case 0:      
       setClassToLink(0, getNextPlayerIcon());      
-      board[0] = [0,'F'];     
+      board[0] = [0,getPlayerName(),'F'];     
       machineAutoMove();      
       break;
     case 1:
       setClassToLink(1, getNextPlayerIcon());      
-      board[1] = [1,'F'];           
+      board[1] = [1,getPlayerName(),'F'];           
       machineAutoMove(); 
       break;
     case 2:
       setClassToLink(2, getNextPlayerIcon());
-      board[2] = [2,'F'];     
+      board[2] = [2,getPlayerName(),'F'];     
       machineAutoMove(); 
       break;
     case 3:
       setClassToLink(3, getNextPlayerIcon());      
-      board[3] = [3,'F'];     
+      board[3] = [3,getPlayerName(),'F'];     
       machineAutoMove(); 
       break;
     case 4:
       setClassToLink(4, getNextPlayerIcon());
-      board[4] = [4,'F'];           
+      board[4] = [4,getPlayerName(),'F'];           
       machineAutoMove(); 
       break;
     case 5:
       setClassToLink(5, getNextPlayerIcon());      
-      board[5] = [5,'F'];           
+      board[5] = [5,getPlayerName(),'F'];           
       machineAutoMove(); 
       break;
     case 6:
       setClassToLink(6, getNextPlayerIcon());
-      board[6] =[6,'F'];
+      board[6] =[6,getPlayerName(),'F'];
       machineAutoMove(); 
       break;
     case 7:
       setClassToLink(7, getNextPlayerIcon());
-      board[7] = [7,'F'];
+      board[7] = [7,getPlayerName(),'F'];
       machineAutoMove(); 
       break;
     case 8:
       setClassToLink(8, getNextPlayerIcon());
-      board[8] = [8,'F'];
+      board[8] = [8,getPlayerName(),'F'];
       machineAutoMove(); 
       break;
     default:
@@ -302,40 +258,116 @@ function moveTo(coordinate) {
   }
 }
 
+function getPlayerName(){  
+  if(players === 1){
+    return playerOne;    
+  }else if(turn === playerOne){
+    turn = playerTwo;
+  }else if(turn === playerTwo){
+    turn = playerOne;
+  }
+  return turn;
+}
+
 function isThereAWinner(){
+
+    // TODO: DETERMINE OR GENERATE OUTPUT TO KNOW WHO WIN AND IN WHAT DIRECTION
+    let horizontalWinnersMoves = [[0,3,6], [1,4,7], [2,5,8]];
+    let verticalWinnersMoves = [[0,1,2], [3,4,5], [6,7,8]];
+    let upRightToLeftDownWinners = [[6,4,2]];
+    let upLeftRoRightDownWinners = [[0,4,8]];
+
+    let tempWinnerBoard = board.slice();
+
+    let playerOneMoves = tempWinnerBoard.filter(x =>x[1] === playerOne);
+    let playerTwoMoves = tempWinnerBoard.filter(x =>x[1] === playerTwo);
+      
+
+    if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+    if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+
+    if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+    if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+
+    if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+    if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+    
+    if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+    if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+    {
+      console.log("horizontal winner won");
+    };
+
+
+    // for(let i = 0; i < horizontalWinnersMoves.length; i++){
+    //   if(horizontalWinnersMoves[i].every(x => playerOneMoves.map(a=>a[0]).includes(x)))
+    //   {
+    //     console.log("horizontal winner won");
+    //   }
+    // }    
+ 
+    // horizontal winners
+    // 0,3,6
+    // 1,4,7
+    // 2,5,8
+
+    // vertical winners
+    // 0,1,2
+    // 3,4,5
+    // 6,7,8
+
+    // up-right-to-left-down winners
+    // 6,4,2
+
+    // up-left-to-right-down winners
+    // 0,4,8
 }
 
 function machineAutoMove() 
 {        
+  //debugger;       
   if(players === 1){     
      let randomMoveIndex = 0;     
      for(let i = 0; i <= board.length; i++){
           randomMoveIndex = Math.abs(Math.floor(Math.random() * board.length));
-          if(board[randomMoveIndex][1]===''){
+          if(board[randomMoveIndex][2]===''){
             break;
           }
      }     
-     setClassToLink(randomMoveIndex, machineIcon);     
-     board[randomMoveIndex][1] = 'F';
+     setClassToLink(randomMoveIndex, machineIcon);             
+     board[randomMoveIndex][0] = randomMoveIndex;
+     board[randomMoveIndex][1] = playerTwo;
+     board[randomMoveIndex][2] = 'F';
      console.log('Machine move');
-    }
-    // if(players === 1){
-
-    //  let availeableMoves = board.filter(x => x !== 1);
-    //  let unavaileableMoves = board.filter(x => x !== 0);
-
-    //  let randomMoveIndex = 0;
-    //  for(let i = 0; availeableMoves.length; i++){
-    //       randomMoveIndex = Math.floor(Math.random() * availeableMoves.length);
-    //       if(!unavaileableMoves.includes(randomMoveIndex)){             
-    //         break;
-    //       }
-    //  }
-
-    //  setClassToLink(randomMoveIndex, machineIcon);
-    //  board[randomMoveIndex] = 1;
-    //  console.log('Machine move');
-    // }
+    }   
 }
 
 function getNextPlayerIcon() {
