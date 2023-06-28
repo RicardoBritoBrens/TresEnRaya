@@ -15,8 +15,8 @@ let machineIcon = "";
 let lastMove = "";
 
 // Board
-let board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-//let board = [[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,'']];
+//let board = [, 0, 0, 0, 0, 0, 0, 0, 0];
+let board = [[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,'']];
 
 // Canvas
 let canvas;
@@ -193,48 +193,49 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
 function moveTo(id) {
   switch (id) {
     case 0:
-      setClassToLink(0, getNextIconMove());
+      debugger;
+      setClassToLink(0, getNextPlayerIcon());
       console.log('Player move');
       board[0] = 1;     
       machineAutoMove();      
       break;
     case 1:
-      setClassToLink(1, getNextIconMove());
+      setClassToLink(1, getNextPlayerIcon());
       board[1] = 1;
       machineAutoMove(); 
       break;
     case 2:
-      setClassToLink(2, getNextIconMove());
+      setClassToLink(2, getNextPlayerIcon());
       board[2] = 1;
       machineAutoMove(); 
       break;
     case 3:
-      setClassToLink(3, getNextIconMove());
+      setClassToLink(3, getNextPlayerIcon());
       board[3] = 1;
       machineAutoMove(); 
       break;
     case 4:
-      setClassToLink(4, getNextIconMove());
+      setClassToLink(4, getNextPlayerIcon());
       board[4] = 1;
       machineAutoMove(); 
       break;
     case 5:
-      setClassToLink(5, getNextIconMove());
+      setClassToLink(5, getNextPlayerIcon());
       board[5] = 1;
       machineAutoMove(); 
       break;
     case 6:
-      setClassToLink(6, getNextIconMove());
+      setClassToLink(6, getNextPlayerIcon());
       board[6] = 1;
       machineAutoMove(); 
       break;
     case 7:
-      setClassToLink(7, getNextIconMove());
+      setClassToLink(7, getNextPlayerIcon());
       board[7] = 1;
       machineAutoMove(); 
       break;
     case 8:
-      setClassToLink(8, getNextIconMove());
+      setClassToLink(8, getNextPlayerIcon());
       board[8] = 1;
       machineAutoMove(); 
       break;
@@ -243,29 +244,103 @@ function moveTo(id) {
   }
 }
 
+// Board movements functions
+function moveTo(coordinate) {
+  
+  switch (coordinate[0]) {
+    case 0:      
+      setClassToLink(0, getNextPlayerIcon());      
+      board[0] = [0,'F'];     
+      machineAutoMove();      
+      break;
+    case 1:
+      setClassToLink(1, getNextPlayerIcon());      
+      board[1] = [1,'F'];           
+      machineAutoMove(); 
+      break;
+    case 2:
+      setClassToLink(2, getNextPlayerIcon());
+      board[2] = [2,'F'];     
+      machineAutoMove(); 
+      break;
+    case 3:
+      setClassToLink(3, getNextPlayerIcon());      
+      board[3] = [3,'F'];     
+      machineAutoMove(); 
+      break;
+    case 4:
+      setClassToLink(4, getNextPlayerIcon());
+      board[4] = [4,'F'];           
+      machineAutoMove(); 
+      break;
+    case 5:
+      setClassToLink(5, getNextPlayerIcon());      
+      board[5] = [5,'F'];           
+      machineAutoMove(); 
+      break;
+    case 6:
+      setClassToLink(6, getNextPlayerIcon());
+      board[6] =[6,'F'];
+      machineAutoMove(); 
+      break;
+    case 7:
+      setClassToLink(7, getNextPlayerIcon());
+      board[7] = [7,'F'];
+      machineAutoMove(); 
+      break;
+    case 8:
+      setClassToLink(8, getNextPlayerIcon());
+      board[8] = [8,'F'];
+      machineAutoMove(); 
+      break;
+    default:
+      break;
+  }
+
+  if(isThereAWinner()){
+    
+  }
+}
+
+function isThereAWinner(){
+}
 
 function machineAutoMove() 
 {        
-    if(players === 1){
-     let filterBoardWithAvaileableMove = board.filter(x => x !== 1);
-     let randomMoveIndex = Math.floor(Math.random() * filterBoardWithAvaileableMove.length)
-     setClassToLink(randomMoveIndex, getNextIconMove());
-     board[randomMoveIndex] = 1;
+  if(players === 1){     
+     let randomMoveIndex = 0;     
+     for(let i = 0; i <= board.length; i++){
+          randomMoveIndex = Math.abs(Math.floor(Math.random() * board.length));
+          if(board[randomMoveIndex][1]===''){
+            break;
+          }
+     }     
+     setClassToLink(randomMoveIndex, machineIcon);     
+     board[randomMoveIndex][1] = 'F';
      console.log('Machine move');
     }
+    // if(players === 1){
+
+    //  let availeableMoves = board.filter(x => x !== 1);
+    //  let unavaileableMoves = board.filter(x => x !== 0);
+
+    //  let randomMoveIndex = 0;
+    //  for(let i = 0; availeableMoves.length; i++){
+    //       randomMoveIndex = Math.floor(Math.random() * availeableMoves.length);
+    //       if(!unavaileableMoves.includes(randomMoveIndex)){             
+    //         break;
+    //       }
+    //  }
+
+    //  setClassToLink(randomMoveIndex, machineIcon);
+    //  board[randomMoveIndex] = 1;
+    //  console.log('Machine move');
+    // }
 }
 
-// function whoTurnIs(){
-//     if(players === 1){
-//        return "player";
-//     }else{
-//         return "machine";
-//     }
-// }
-
-function getNextIconMove() {
+function getNextPlayerIcon() {
   if (players === 1) {
-    return machineIcon;
+    return playerIcon;
   } else if (players === 2) {
     let result = playerIcon;
     if (playerIcon === "o") {
@@ -277,8 +352,6 @@ function getNextIconMove() {
   }
 }
 
-// TODO: TEST RANDOM PLAY BY THE MACHINE
-// TODO: CREATE LOGIC TO UPDATE BOARD ARRAY ANC CHECK IF SOME ONE ALREADY WINS
 // TODO: PENDING WHEN SOME ONE WINS THEN SHOW CANVAS AND DRAW WINNER LINE
 
 // Testing set icon
