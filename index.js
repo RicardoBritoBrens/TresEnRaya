@@ -1,7 +1,6 @@
 const playerss = ['playerOne', 'playerTwo', 'machine'];
 let playerOne = '';
 let playerTwo = '';
-
 let turn = '';
 
 // Constants
@@ -10,6 +9,11 @@ const selectPlayerIconDivName = "select-player-icon-div";
 const boardDivName = "board-div";
 const boardInnerDivName = "board-inner-div";
 const youWinDivName = "you-win-div";
+
+const horizontalWinnersMoves = [[0,3,6], [1,4,7], [2,5,8]];
+const verticalWinnersMoves = [[0,1,2], [3,4,5], [6,7,8]];
+const upRightToLeftDownWinners = [[6,4,2]];
+const upLeftRoRightDownWinners = [[0,4,8]];
 
 // Game Status
 let gameAlreadyStart = false;
@@ -202,12 +206,13 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
 
 // Board movements functions
 function moveTo(coordinate) {
-  //debugger;
+
   switch (coordinate[0]) {    
     case 0:      
       setClassToLink(0, getNextPlayerIcon());      
-      board[0] = [0,getPlayerName(),'F'];     
-      machineAutoMove();      
+      board[0] = [0,getPlayerName(),'F'];          
+      machineAutoMove();  
+      isThereAWinner();    
       break;
     case 1:
       setClassToLink(1, getNextPlayerIcon());      
@@ -252,10 +257,7 @@ function moveTo(coordinate) {
     default:
       break;
   }
-
-  if(isThereAWinner()){
-    
-  }
+  isThereAWinner();    
 }
 
 function getPlayerName(){  
@@ -270,63 +272,34 @@ function getPlayerName(){
 }
 
 function isThereAWinner(){
+    
+    // TODO: DETERMINE OR GENERATE OUTPUT TO KNOW WHO WIN AND IN WHAT DIRECTION        
 
-    // TODO: DETERMINE OR GENERATE OUTPUT TO KNOW WHO WIN AND IN WHAT DIRECTION
-    let horizontalWinnersMoves = [[0,3,6], [1,4,7], [2,5,8]];
-    let verticalWinnersMoves = [[0,1,2], [3,4,5], [6,7,8]];
-    let upRightToLeftDownWinners = [[6,4,2]];
-    let upLeftRoRightDownWinners = [[0,4,8]];
 
     let tempWinnerBoard = board.slice();
 
     let playerOneMoves = tempWinnerBoard.filter(x =>x[1] === playerOne);
     let playerTwoMoves = tempWinnerBoard.filter(x =>x[1] === playerTwo);
-      
+    
 
-    if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+    if(isThereAHorizontalWinner(playerOneMoves, playerTwoMoves)){      
+      return true;
+    }
+
+    if(isThereAVerticalWinner(playerOneMoves, playerTwoMoves))
     {
-      console.log("horizontal winner won");
+      return true;
+    }
+
+    if(isThereARightToLeftWinner(playerOneMoves, playerTwoMoves)){
+      return true;
     };
 
-    if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
-    };
-
-
-    if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
-    };
-
-    if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
-    };
-
-
-    if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
-    };
-
-    if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
+    if(isThereALeftToRightWinner(playerOneMoves, playerTwoMoves)){
+      return true;
     };
 
     
-    if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
-    };
-
-    if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
-    {
-      console.log("horizontal winner won");
-    };
-
-
     // for(let i = 0; i < horizontalWinnersMoves.length; i++){
     //   if(horizontalWinnersMoves[i].every(x => playerOneMoves.map(a=>a[0]).includes(x)))
     //   {
@@ -351,9 +324,57 @@ function isThereAWinner(){
     // 0,4,8
 }
 
+function isThereAHorizontalWinner(playerOneMoves, playerTwoMoves)
+{
+  if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player one horizontal winner won");
+  };
+  if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player two horizontal winner won");
+  };
+}
+
+function isThereAVerticalWinner(playerOneMoves, playerTwoMoves)
+{
+  if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player one vertical winner won");
+  };
+  if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player two vertical winner won");
+  };
+}
+
+function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves)
+{
+  if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player one right to left winner won");
+  };
+  if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player two right to left winner won");
+  };
+}
+
+function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves)
+{
+  if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player one left to right winner won");
+  };
+  if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
+  {
+    console.log("player two left to right winner won");
+  };
+}
+
+
 function machineAutoMove() 
-{        
-  //debugger;       
+{             
   if(players === 1){     
      let randomMoveIndex = 0;     
      for(let i = 0; i <= board.length; i++){
@@ -384,7 +405,7 @@ function getNextPlayerIcon() {
   }
 }
 
-// TODO: PENDING WHEN SOME ONE WINS THEN SHOW CANVAS AND DRAW WINNER LINE
+// TODO: IMPROVE FUNCTIONS TO DETERMINE THE WINNER TO RETURN OUTPUT THAT HAVE THE WINNER NAME, AND THE COORDINATES TO OR SIMPLY SHOW THE APPROPIATE ONE DRAW LINE BY FINDING THE MATCHED MOVES
 
 // Testing set icon
 //setClassToLink(0,'o');
