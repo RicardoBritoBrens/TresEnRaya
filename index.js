@@ -2,6 +2,7 @@ const playerss = ['playerOne', 'playerTwo', 'machine'];
 let playerOne = '';
 let playerTwo = '';
 let turn = '';
+let winnersMovesAndCoordinates = ['',[]];
 
 // Constants
 const selectPlayersDivName = "select-players-div";
@@ -211,53 +212,78 @@ function moveTo(coordinate) {
     case 0:      
       setClassToLink(0, getNextPlayerIcon());      
       board[0] = [0,getPlayerName(),'F'];          
-      machineAutoMove();  
-      isThereAWinner();    
+      if(isThereAWinner()){
+        return;
+      }
+      machineAutoMove();        
       break;
     case 1:
       setClassToLink(1, getNextPlayerIcon());      
       board[1] = [1,getPlayerName(),'F'];           
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 2:
       setClassToLink(2, getNextPlayerIcon());
       board[2] = [2,getPlayerName(),'F'];     
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 3:
       setClassToLink(3, getNextPlayerIcon());      
       board[3] = [3,getPlayerName(),'F'];     
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 4:
       setClassToLink(4, getNextPlayerIcon());
       board[4] = [4,getPlayerName(),'F'];           
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 5:
       setClassToLink(5, getNextPlayerIcon());      
       board[5] = [5,getPlayerName(),'F'];           
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 6:
       setClassToLink(6, getNextPlayerIcon());
       board[6] =[6,getPlayerName(),'F'];
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 7:
       setClassToLink(7, getNextPlayerIcon());
       board[7] = [7,getPlayerName(),'F'];
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     case 8:
       setClassToLink(8, getNextPlayerIcon());
       board[8] = [8,getPlayerName(),'F'];
+      if(isThereAWinner()){
+        return;
+      }
       machineAutoMove(); 
       break;
     default:
       break;
-  }
-  isThereAWinner();    
+  }   
 }
 
 function getPlayerName(){  
@@ -270,19 +296,16 @@ function getPlayerName(){
   }
   return turn;
 }
-
+ 
 function isThereAWinner(){
     
-    // TODO: DETERMINE OR GENERATE OUTPUT TO KNOW WHO WIN AND IN WHAT DIRECTION        
-
-
     let tempWinnerBoard = board.slice();
 
     let playerOneMoves = tempWinnerBoard.filter(x =>x[1] === playerOne);
     let playerTwoMoves = tempWinnerBoard.filter(x =>x[1] === playerTwo);
     
-
     if(isThereAHorizontalWinner(playerOneMoves, playerTwoMoves)){      
+      winnersMovesAndCoordinates = ['horizontal', []]
       return true;
     }
 
@@ -298,80 +321,95 @@ function isThereAWinner(){
     if(isThereALeftToRightWinner(playerOneMoves, playerTwoMoves)){
       return true;
     };
-
     
-    // for(let i = 0; i < horizontalWinnersMoves.length; i++){
-    //   if(horizontalWinnersMoves[i].every(x => playerOneMoves.map(a=>a[0]).includes(x)))
-    //   {
-    //     console.log("horizontal winner won");
-    //   }
-    // }    
- 
-    // horizontal winners
-    // 0,3,6
-    // 1,4,7
-    // 2,5,8
-
-    // vertical winners
-    // 0,1,2
-    // 3,4,5
-    // 6,7,8
-
-    // up-right-to-left-down winners
-    // 6,4,2
-
-    // up-left-to-right-down winners
-    // 0,4,8
 }
 
 function isThereAHorizontalWinner(playerOneMoves, playerTwoMoves)
 {
+  let output = false;
   if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
-  {
+  {   
+    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerOneMoves);        
     console.log("player one horizontal winner won");
+    output = true;
   };
+
   if(horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerTwoMoves);    
     console.log("player two horizontal winner won");
+    output = true;
   };
+  return output;
 }
 
 function isThereAVerticalWinner(playerOneMoves, playerTwoMoves)
 {
+  let output = false;
   if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerTwoMoves);    
     console.log("player one vertical winner won");
+    output = true;
   };
   if(verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerTwoMoves);    
     console.log("player two vertical winner won");
+    output = true;
   };
+  return output;
 }
 
 function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves)
 {
+  let output = false;
   if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(upLeftRoRightDownWinners, playerOneMoves);    
     console.log("player one right to left winner won");
+    output = true;
   };
   if(upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(upLeftRoRightDownWinners, playerTwoMoves);    
     console.log("player two right to left winner won");
+    output = true;
   };
+  return output;
 }
 
 function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves)
 {
+  let output = false;
   if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(upRightToLeftDownWinners, playerOneMoves);    
     console.log("player one left to right winner won");
+    output = true;
   };
   if(upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a=>a[0]).includes(x))))
   {
+    winnersMovesAndCoordinates = findWinnerDetails(upRightToLeftDownWinners, playerTwoMoves);    
     console.log("player two left to right winner won");
+    output = true;
   };
+  return output;
 }
 
+function findWinnerDetails(winnerMoves, playerMoves)
+{
+  let output = ['',[]];
+  for(let i = 0; i < winnerMoves.length; i++){
+    let current = winnerMoves[i].every(x => playerMoves.map(a=>a[0]).includes(x));
+    if(current){
+      output = [playerMoves[0][1],winnerMoves[i]];
+      console.log(`player:${playerMoves[0][1]}, coordinates:${winnerMoves[i]}`);      
+      return output;
+    }
+  }
+  return output;
+}
 
 function machineAutoMove() 
 {             
@@ -388,6 +426,9 @@ function machineAutoMove()
      board[randomMoveIndex][1] = playerTwo;
      board[randomMoveIndex][2] = 'F';
      console.log('Machine move');
+     if(isThereAWinner()){
+      return;
+    }
     }   
 }
 
@@ -405,7 +446,7 @@ function getNextPlayerIcon() {
   }
 }
 
-// TODO: IMPROVE FUNCTIONS TO DETERMINE THE WINNER TO RETURN OUTPUT THAT HAVE THE WINNER NAME, AND THE COORDINATES TO OR SIMPLY SHOW THE APPROPIATE ONE DRAW LINE BY FINDING THE MATCHED MOVES
+// TODO: SIMULATE ONE PLAYER VS IA AS WINNER TO CHECK IF I CAN GET THE WINNER AND THE COORDINATES
 
 // Testing set icon
 //setClassToLink(0,'o');
