@@ -40,7 +40,7 @@ function completeDraw() {
 //setupWinnerCanvas();
 
 // Players functions
-function onePlayerVsIa() {  
+function onePlayerVsIa() {
   players = 1;
   playAudio("dragonzord-flute");
   setVisibilityToDiv(selectPlayersDivName, "hide");
@@ -193,50 +193,51 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
 function moveTo(id) {
   switch (id) {
     case 0:
+      debugger;
       setClassToLink(0, getNextIconMove());
       console.log('Player move');
-      board[0] = 1;     
-      machineAutoMove();      
+      board[0] = 1;
+      machineAutoMove();
       break;
     case 1:
       setClassToLink(1, getNextIconMove());
       board[1] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 2:
       setClassToLink(2, getNextIconMove());
       board[2] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 3:
       setClassToLink(3, getNextIconMove());
       board[3] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 4:
       setClassToLink(4, getNextIconMove());
       board[4] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 5:
       setClassToLink(5, getNextIconMove());
       board[5] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 6:
       setClassToLink(6, getNextIconMove());
       board[6] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 7:
       setClassToLink(7, getNextIconMove());
       board[7] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     case 8:
       setClassToLink(8, getNextIconMove());
       board[8] = 1;
-      machineAutoMove(); 
+      machineAutoMove();
       break;
     default:
       break;
@@ -244,15 +245,14 @@ function moveTo(id) {
 }
 
 
-function machineAutoMove() 
-{        
-    if(players === 1){
-     let filterBoardWithAvaileableMove = board.filter(x => x !== 1);
-     let randomMoveIndex = Math.floor(Math.random() * filterBoardWithAvaileableMove.length)
-     setClassToLink(randomMoveIndex, getNextIconMove());
-     board[randomMoveIndex] = 1;
-     console.log('Machine move');
-    }
+function machineAutoMove() {
+  if (players === 1) {
+    let filterBoardWithAvaileableMove = board.filter(x => x !== 1);
+    let randomMoveIndex = Math.floor(Math.random() * filterBoardWithAvaileableMove.length)
+    setClassToLink(randomMoveIndex, getNextIconMove());
+    board[randomMoveIndex] = 1;
+    console.log('Machine move');
+  }
 }
 
 // function whoTurnIs(){
