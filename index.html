@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <link rel="stylesheet" type="text/css" href="on-off-switch-button.css" />    
+    <link rel="stylesheet" type="text/css" href="on-off-switch-button.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -38,9 +38,18 @@
     </div>
 
     <div id="board-div" class="board center-div display-none">
-      <div id="winner-canvas-div" class="center-div-non-solid display-none" style="width: 550px; height: 550px; background-color: transparent;">
-            <canvas id="canvas" width="550px" height="550px" style="background-color: transparent;"></canvas>
-        </div>
+      <div
+        id="winner-canvas-div"
+        class="center-div-non-solid display-none"
+        style="width: 550px; height: 550px; background-color: transparent"
+      >
+        <canvas
+          id="canvas"
+          width="550px"
+          height="550px"
+          style="background-color: transparent"
+        ></canvas>
+      </div>
 
       <div id="board-inner-div" class="board-inner">
         <a id="1" onclick="moveTo([0, ''])" href="#" class="box fill-div"></a>

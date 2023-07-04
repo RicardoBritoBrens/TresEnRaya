@@ -1,4 +1,3 @@
-
 // =============================
 // Constants
 // =============================
@@ -9,8 +8,16 @@ const boardInnerDivName = "board-inner-div";
 const winnerCanvasDiv = "winner-canvas-div";
 
 const playerss = ["playerOne", "playerTwo", "machine"];
-const horizontalWinnersMoves = [[0, 3, 6],[1, 4, 7],[2, 5, 8]];
-const verticalWinnersMoves = [[0, 1, 2],[3, 4, 5],[6, 7, 8],];
+const horizontalWinnersMoves = [
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+];
+const verticalWinnersMoves = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+];
 const upRightToLeftDownWinners = [[6, 4, 2]];
 const upLeftRoRightDownWinners = [[0, 4, 8]];
 
@@ -39,9 +46,17 @@ let lastMove = "";
 // =============================
 // Board
 // =============================
-let board = [[0, "", ""],[0, "", ""],[0, "", ""],
-             [0, "", ""],[0, "", ""],[0, "", ""],
-             [0, "", ""],[0, "", ""],[0, "", ""],];
+let board = [
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+  [0, "", ""],
+];
 
 // =============================
 // Canvas
@@ -50,7 +65,6 @@ let canvas;
 let context;
 let width;
 let height;
-
 
 // =============================
 // The toggle button function
@@ -64,10 +78,10 @@ function toggleSoundOnOff() {
 }
 
 function playAudio(audioName) {
-  if(allowGameSounds == true){
+  if (allowGameSounds == true) {
     var audio = new Audio(`./assets/sounds/${audioName}.mp3`);
     audio.play();
-  }  
+  }
 }
 
 // =============================
@@ -145,7 +159,7 @@ function setClassToLink(index, iconClass) {
 }
 
 // Draw winners rows
-function drawFirstRowWinner() {  
+function drawFirstRowWinner() {
   showWinnerCanvas();
   drawHorizontalWinnerGreenLine(1, context, width, height);
   completeDraw();
@@ -180,11 +194,13 @@ function drawThirdColumnWinner() {
 
 // Draw winner corners
 function drawUpLeftToRightDownWinner() {
+  debugger;
   showWinnerCanvas();
   drawCornerWinnerGreenLine("up-left-to-right-down", context, width);
   completeDraw();
 }
 function drawUpRightToLeftDownWinner() {
+  debugger;
   showWinnerCanvas();
   drawCornerWinnerGreenLine("up-right-to-left-down", context, width);
   completeDraw();
@@ -200,13 +216,13 @@ function drawHorizontalWinnerGreenLine(number, context, width) {
       break;
     case 2:
       context.beginPath();
-      context.moveTo(width, width - 100);
-      context.lineTo(0, width - 100);
+      context.moveTo(0, 275);
+      context.lineTo(width, 275);
       break;
     case 3:
       context.beginPath();
-      context.moveTo(0, 275);
-      context.lineTo(width, 275);
+      context.moveTo(width, width - 100);
+      context.lineTo(0, width - 100);
       break;
   }
 }
@@ -336,51 +352,82 @@ function getPlayerName() {
 }
 
 function isThereAWinner() {
-
   let tempWinnerBoard = board.slice();
   let playerOneMoves = tempWinnerBoard.filter((x) => x[1] === playerOne);
   let playerTwoMoves = tempWinnerBoard.filter((x) => x[1] === playerTwo);
 
   if (isThereAHorizontalWinner(playerOneMoves, playerTwoMoves)) {
-    if(winnersMovesAndCoordinates[1].every(x=> horizontalWinnersMoves[0].includes(x))){
+    if (
+      winnersMovesAndCoordinates[1].every((x) =>
+        horizontalWinnersMoves[0].includes(x)
+      )
+    ) {
       drawFirstRowWinner();
+      return true;
     }
 
-    if(winnersMovesAndCoordinates[1].every(x=> horizontalWinnersMoves[1].includes(x))){
+    if (
+      winnersMovesAndCoordinates[1].every((x) =>
+        horizontalWinnersMoves[1].includes(x)
+      )
+    ) {
       drawSecondRowWinner();
+      return true;
     }
 
-    if(winnersMovesAndCoordinates[1].every(x=> horizontalWinnersMoves[2].includes(x))){
+    if (
+      winnersMovesAndCoordinates[1].every((x) =>
+        horizontalWinnersMoves[2].includes(x)
+      )
+    ) {
       drawThirdRowWinner();
+      return true;
     }
-    return true;
   }
 
   if (isThereAVerticalWinner(playerOneMoves, playerTwoMoves)) {
-    if(winnersMovesAndCoordinates[1].every(x=> verticalWinnersMoves[0].includes(x))){
+    if (
+      winnersMovesAndCoordinates[1].every((x) =>
+        verticalWinnersMoves[0].includes(x)
+      )
+    ) {
       drawFirstColumnWinner();
+      return true;
     }
 
-    if(winnersMovesAndCoordinates[1].every(x=> verticalWinnersMoves[1].includes(x))){
+    if (
+      winnersMovesAndCoordinates[1].every((x) =>
+        verticalWinnersMoves[1].includes(x)
+      )
+    ) {
       drawSecondColumnWinner();
+      return true;
     }
 
-    if(winnersMovesAndCoordinates[1].every(x=> verticalWinnersMoves[2].includes(x))){
+    if (
+      winnersMovesAndCoordinates[1].every((x) =>
+        verticalWinnersMoves[2].includes(x)
+      )
+    ) {
       drawThirdColumnWinner();
+      return true;
     }
-    return true;
   }
 
   if (isThereARightToLeftWinner(playerOneMoves, playerTwoMoves)) {
-    if(winnersMovesAndCoordinates[1].every(x=> upRightToLeftDownWinners[0].includes(x))){
+    debugger;
+    if (winnersMovesAndCoordinates[1].every((x) =>upRightToLeftDownWinners[0].includes(x))) {      
       drawUpRightToLeftDownWinner();
+      return true;
     }
-    return true;
   }
 
   if (isThereALeftToRightWinner(playerOneMoves, playerTwoMoves)) {
-    if(winnersMovesAndCoordinates[1].every(x=> upLeftRoRightDownWinners[0].includes(x))){
+    debugger;
+    if (winnersMovesAndCoordinates[1].every((x) =>upLeftRoRightDownWinners[0].includes(x))
+    ) {
       drawUpLeftToRightDownWinner();
+      return true;
     }
   }
 }
@@ -475,27 +522,14 @@ function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
 
 function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
   let output = false;
-  if (
-    upRightToLeftDownWinners.some((winnerMoves) =>
-      winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
-    )
-  ) {
-    winnersMovesAndCoordinates = findWinnerDetails(
-      upRightToLeftDownWinners,
-      playerOneMoves
-    );
+  if (upRightToLeftDownWinners.some((winnerMoves) =>winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x)))){
+    winnersMovesAndCoordinates = findWinnerDetails(upRightToLeftDownWinners,playerOneMoves);
     console.log("player one left to right winner won");
     output = true;
   }
-  if (
-    upRightToLeftDownWinners.some((winnerMoves) =>
-      winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
-    )
-  ) {
-    winnersMovesAndCoordinates = findWinnerDetails(
-      upRightToLeftDownWinners,
-      playerTwoMoves
-    );
+
+  if (upRightToLeftDownWinners.some((winnerMoves) =>winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x)))) {
+    winnersMovesAndCoordinates = findWinnerDetails(upRightToLeftDownWinners,playerTwoMoves);
     console.log("player two left to right winner won");
     output = true;
   }
@@ -551,9 +585,11 @@ function getNextPlayerIcon() {
   }
 }
 
-function showWinnerCanvas(){  
-  setupWinnerCanvas();  
+function showWinnerCanvas() {
+  setupWinnerCanvas();
   let innerDiv = document.getElementById("winner-canvas-div");
-  innerDiv.classList.remove('display-none');
-  setVisibilityToDiv(winnerCanvasDiv, "show");    
+  innerDiv.classList.remove("display-none");
+  setVisibilityToDiv(winnerCanvasDiv, "show");
 }
+
+// TODO: TEST ALL POSIBLE WINNER OPORTUNITIES 
