@@ -1,42 +1,78 @@
-const playerss = ['playerOne', 'playerTwo', 'machine'];
-let playerOne = '';
-let playerTwo = '';
-let turn = '';
-let winnersMovesAndCoordinates = ['', []];
-let allowGameSounds = false;
 
+// =============================
 // Constants
+// =============================
 const selectPlayersDivName = "select-players-div";
 const selectPlayerIconDivName = "select-player-icon-div";
 const boardDivName = "board-div";
 const boardInnerDivName = "board-inner-div";
-const youWinDivName = "you-win-div";
+const winnerCanvasDiv = "winner-canvas-div";
 
-const horizontalWinnersMoves = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
-const verticalWinnersMoves = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
+const playerss = ["playerOne", "playerTwo", "machine"];
+const horizontalWinnersMoves = [[0, 3, 6],[1, 4, 7],[2, 5, 8]];
+const verticalWinnersMoves = [[0, 1, 2],[3, 4, 5],[6, 7, 8],];
 const upRightToLeftDownWinners = [[6, 4, 2]];
 const upLeftRoRightDownWinners = [[0, 4, 8]];
 
+// =============================
+// Variables
+// =============================
+let playerOne = "";
+let playerTwo = "";
+let turn = "";
+let winnersMovesAndCoordinates = ["", []];
+let allowGameSounds = false;
+
+// =============================
 // Game Status
+// =============================
 let gameAlreadyStart = false;
 
+// =============================
 // Players
+// =============================
 let players = 0;
 let playerIcon = "";
 let machineIcon = "";
 let lastMove = "";
 
+// =============================
 // Board
-//let board = [, 0, 0, 0, 0, 0, 0, 0, 0];
-//let board = [[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,''],[0,'']];
-let board = [[0, '', ''], [0, '', ''], [0, '', ''], [0, '', ''], [0, '', ''], [0, '', ''], [0, '', ''], [0, '', ''], [0, '', '']];
+// =============================
+let board = [[0, "", ""],[0, "", ""],[0, "", ""],
+             [0, "", ""],[0, "", ""],[0, "", ""],
+             [0, "", ""],[0, "", ""],[0, "", ""],];
 
+// =============================
 // Canvas
+// =============================
 let canvas;
 let context;
 let width;
 let height;
 
+
+// =============================
+// The toggle button function
+// =============================
+function toggleSoundOnOff() {
+  if (allowGameSounds == true) {
+    allowGameSounds = false;
+  } else if (allowGameSounds == false) {
+    allowGameSounds = true;
+  }
+}
+
+function playAudio(audioName) {
+  if(allowGameSounds == true){
+    var audio = new Audio(`./assets/sounds/${audioName}.mp3`);
+    audio.play();
+  }  
+}
+
+// =============================
+// Game Functions
+// =============================
 function setupWinnerCanvas() {
   canvas = document.getElementById("canvas");
   context = canvas.getContext("2d");
@@ -49,10 +85,7 @@ function completeDraw() {
   context.stroke();
 }
 
-// Setup winner canvas needed to allow drawing
-//setupWinnerCanvas();
-
-// Players functions
+// Select player mode functions
 function onePlayerVsIa() {
   players = 1;
   playerOne = playerss[0];
@@ -70,7 +103,7 @@ function twoPlayers() {
   setVisibilityToDiv(selectPlayerIconDivName, "show");
 }
 
-// Select Icons functions
+// Select icons functions
 function useIconX() {
   playerIcon = "x";
   if (players === 1) {
@@ -103,10 +136,7 @@ function setVisibilityToDiv(divId, visibility) {
     currentDiv.style.display = "block";
   }
 }
-function playAudio(audioName) {
-  var audio = new Audio(`./assets/sounds/${audioName}.mp3`);
-  //audio.play();
-}
+
 function setClassToLink(index, iconClass) {
   let innerDiv = document.getElementById("board-inner-div");
   let link = innerDiv.children[index];
@@ -115,39 +145,47 @@ function setClassToLink(index, iconClass) {
 }
 
 // Draw winners rows
-function drawFirstRowWinner() {
+function drawFirstRowWinner() {  
+  showWinnerCanvas();
   drawHorizontalWinnerGreenLine(1, context, width, height);
   completeDraw();
 }
 function drawSecondRowWinner() {
+  showWinnerCanvas();
   drawHorizontalWinnerGreenLine(2, context, width, height);
   completeDraw();
 }
 function drawThirdRowWinner() {
+  showWinnerCanvas();
   drawHorizontalWinnerGreenLine(3, context, width, height);
   completeDraw();
 }
 
 // Draw winners columns
 function drawFirstColumnWinner() {
+  showWinnerCanvas();
   drawVerticalWinnerGreenLine(1, context, width, height);
   completeDraw();
 }
 function drawSecondColumnWinner() {
+  showWinnerCanvas();
   drawVerticalWinnerGreenLine(2, context, width, height);
   completeDraw();
 }
 function drawThirdColumnWinner() {
+  showWinnerCanvas();
   drawVerticalWinnerGreenLine(3, context, width, height);
   completeDraw();
 }
 
 // Draw winner corners
 function drawUpLeftToRightDownWinner() {
+  showWinnerCanvas();
   drawCornerWinnerGreenLine("up-left-to-right-down", context, width);
   completeDraw();
 }
 function drawUpRightToLeftDownWinner() {
+  showWinnerCanvas();
   drawCornerWinnerGreenLine("up-right-to-left-down", context, width);
   completeDraw();
 }
@@ -208,11 +246,10 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
 
 // Board movements functions
 function moveTo(coordinate) {
-
   switch (coordinate[0]) {
     case 0:
       setClassToLink(0, getNextPlayerIcon());
-      board[0] = [0, getPlayerName(), 'F'];
+      board[0] = [0, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -220,7 +257,7 @@ function moveTo(coordinate) {
       break;
     case 1:
       setClassToLink(1, getNextPlayerIcon());
-      board[1] = [1, getPlayerName(), 'F'];
+      board[1] = [1, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -228,7 +265,7 @@ function moveTo(coordinate) {
       break;
     case 2:
       setClassToLink(2, getNextPlayerIcon());
-      board[2] = [2, getPlayerName(), 'F'];
+      board[2] = [2, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -236,7 +273,7 @@ function moveTo(coordinate) {
       break;
     case 3:
       setClassToLink(3, getNextPlayerIcon());
-      board[3] = [3, getPlayerName(), 'F'];
+      board[3] = [3, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -244,7 +281,7 @@ function moveTo(coordinate) {
       break;
     case 4:
       setClassToLink(4, getNextPlayerIcon());
-      board[4] = [4, getPlayerName(), 'F'];
+      board[4] = [4, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -252,7 +289,7 @@ function moveTo(coordinate) {
       break;
     case 5:
       setClassToLink(5, getNextPlayerIcon());
-      board[5] = [5, getPlayerName(), 'F'];
+      board[5] = [5, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -260,7 +297,7 @@ function moveTo(coordinate) {
       break;
     case 6:
       setClassToLink(6, getNextPlayerIcon());
-      board[6] = [6, getPlayerName(), 'F'];
+      board[6] = [6, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -268,7 +305,7 @@ function moveTo(coordinate) {
       break;
     case 7:
       setClassToLink(7, getNextPlayerIcon());
-      board[7] = [7, getPlayerName(), 'F'];
+      board[7] = [7, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -276,7 +313,7 @@ function moveTo(coordinate) {
       break;
     case 8:
       setClassToLink(8, getNextPlayerIcon());
-      board[8] = [8, getPlayerName(), 'F'];
+      board[8] = [8, getPlayerName(), "F"];
       if (isThereAWinner()) {
         return;
       }
@@ -301,94 +338,176 @@ function getPlayerName() {
 function isThereAWinner() {
 
   let tempWinnerBoard = board.slice();
-
-  let playerOneMoves = tempWinnerBoard.filter(x => x[1] === playerOne);
-  let playerTwoMoves = tempWinnerBoard.filter(x => x[1] === playerTwo);
+  let playerOneMoves = tempWinnerBoard.filter((x) => x[1] === playerOne);
+  let playerTwoMoves = tempWinnerBoard.filter((x) => x[1] === playerTwo);
 
   if (isThereAHorizontalWinner(playerOneMoves, playerTwoMoves)) {
-    winnersMovesAndCoordinates = ['horizontal', []]
+    if(winnersMovesAndCoordinates[1].every(x=> horizontalWinnersMoves[0].includes(x))){
+      drawFirstRowWinner();
+    }
+
+    if(winnersMovesAndCoordinates[1].every(x=> horizontalWinnersMoves[1].includes(x))){
+      drawSecondRowWinner();
+    }
+
+    if(winnersMovesAndCoordinates[1].every(x=> horizontalWinnersMoves[2].includes(x))){
+      drawThirdRowWinner();
+    }
     return true;
   }
 
   if (isThereAVerticalWinner(playerOneMoves, playerTwoMoves)) {
+    if(winnersMovesAndCoordinates[1].every(x=> verticalWinnersMoves[0].includes(x))){
+      drawFirstColumnWinner();
+    }
+
+    if(winnersMovesAndCoordinates[1].every(x=> verticalWinnersMoves[1].includes(x))){
+      drawSecondColumnWinner();
+    }
+
+    if(winnersMovesAndCoordinates[1].every(x=> verticalWinnersMoves[2].includes(x))){
+      drawThirdColumnWinner();
+    }
     return true;
   }
 
   if (isThereARightToLeftWinner(playerOneMoves, playerTwoMoves)) {
+    if(winnersMovesAndCoordinates[1].every(x=> upRightToLeftDownWinners[0].includes(x))){
+      drawUpRightToLeftDownWinner();
+    }
     return true;
-  };
+  }
 
   if (isThereALeftToRightWinner(playerOneMoves, playerTwoMoves)) {
-    return true;
-  };
-
+    if(winnersMovesAndCoordinates[1].every(x=> upLeftRoRightDownWinners[0].includes(x))){
+      drawUpLeftToRightDownWinner();
+    }
+  }
 }
 
 function isThereAHorizontalWinner(playerOneMoves, playerTwoMoves) {
   let output = false;
-  if (horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerOneMoves);
+  if (
+    horizontalWinnersMoves.some((winnerMoves) =>
+      winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      horizontalWinnersMoves,
+      playerOneMoves
+    );
     console.log("player one horizontal winner won");
     output = true;
-  };
+  }
 
-  if (horizontalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerTwoMoves);
+  if (
+    horizontalWinnersMoves.some((winnerMoves) =>
+      winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      horizontalWinnersMoves,
+      playerTwoMoves
+    );
     console.log("player two horizontal winner won");
     output = true;
-  };
+  }
   return output;
 }
 
 function isThereAVerticalWinner(playerOneMoves, playerTwoMoves) {
   let output = false;
-  if (verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerTwoMoves);
+  if (
+    verticalWinnersMoves.some((winnerMoves) =>
+      winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      horizontalWinnersMoves,
+      playerTwoMoves
+    );
     console.log("player one vertical winner won");
     output = true;
-  };
-  if (verticalWinnersMoves.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(horizontalWinnersMoves, playerTwoMoves);
+  }
+  if (
+    verticalWinnersMoves.some((winnerMoves) =>
+      winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      horizontalWinnersMoves,
+      playerTwoMoves
+    );
     console.log("player two vertical winner won");
     output = true;
-  };
+  }
   return output;
 }
 
 function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
   let output = false;
-  if (upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(upLeftRoRightDownWinners, playerOneMoves);
+  if (
+    upLeftRoRightDownWinners.some((winnerMoves) =>
+      winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      upLeftRoRightDownWinners,
+      playerOneMoves
+    );
     console.log("player one right to left winner won");
     output = true;
-  };
-  if (upLeftRoRightDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(upLeftRoRightDownWinners, playerTwoMoves);
+  }
+  if (
+    upLeftRoRightDownWinners.some((winnerMoves) =>
+      winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      upLeftRoRightDownWinners,
+      playerTwoMoves
+    );
     console.log("player two right to left winner won");
     output = true;
-  };
+  }
   return output;
 }
 
 function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
   let output = false;
-  if (upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerOneMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(upRightToLeftDownWinners, playerOneMoves);
+  if (
+    upRightToLeftDownWinners.some((winnerMoves) =>
+      winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      upRightToLeftDownWinners,
+      playerOneMoves
+    );
     console.log("player one left to right winner won");
     output = true;
-  };
-  if (upRightToLeftDownWinners.some(winnerMoves => winnerMoves.every(x => playerTwoMoves.map(a => a[0]).includes(x)))) {
-    winnersMovesAndCoordinates = findWinnerDetails(upRightToLeftDownWinners, playerTwoMoves);
+  }
+  if (
+    upRightToLeftDownWinners.some((winnerMoves) =>
+      winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
+    )
+  ) {
+    winnersMovesAndCoordinates = findWinnerDetails(
+      upRightToLeftDownWinners,
+      playerTwoMoves
+    );
     console.log("player two left to right winner won");
     output = true;
-  };
+  }
   return output;
 }
 
 function findWinnerDetails(winnerMoves, playerMoves) {
-  let output = ['', []];
+  let output = ["", []];
   for (let i = 0; i < winnerMoves.length; i++) {
-    let current = winnerMoves[i].every(x => playerMoves.map(a => a[0]).includes(x));
+    let current = winnerMoves[i].every((x) =>
+      playerMoves.map((a) => a[0]).includes(x)
+    );
     if (current) {
       output = [playerMoves[0][1], winnerMoves[i]];
       console.log(`player:${playerMoves[0][1]}, coordinates:${winnerMoves[i]}`);
@@ -403,15 +522,15 @@ function machineAutoMove() {
     let randomMoveIndex = 0;
     for (let i = 0; i <= board.length; i++) {
       randomMoveIndex = Math.abs(Math.floor(Math.random() * board.length));
-      if (board[randomMoveIndex][2] === '') {
+      if (board[randomMoveIndex][2] === "") {
         break;
       }
     }
     setClassToLink(randomMoveIndex, machineIcon);
     board[randomMoveIndex][0] = randomMoveIndex;
     board[randomMoveIndex][1] = playerTwo;
-    board[randomMoveIndex][2] = 'F';
-    console.log('Machine move');
+    board[randomMoveIndex][2] = "F";
+    console.log("Machine move");
     if (isThereAWinner()) {
       return;
     }
@@ -432,42 +551,9 @@ function getNextPlayerIcon() {
   }
 }
 
-function enableSounds() {
-  debugger;
-  let enable = document.getElementById('disable')
-  enable.classList.remove('display-none');
-  let disable = document.getElementById('enable')
-  disable.classList.add('display-none');
+function showWinnerCanvas(){  
+  setupWinnerCanvas();  
+  let innerDiv = document.getElementById("winner-canvas-div");
+  innerDiv.classList.remove('display-none');
+  setVisibilityToDiv(winnerCanvasDiv, "show");    
 }
-
-function disableSounds() {
-  debugger;
-  let disable = document.getElementById('enable')
-  enable.classList.remove('display-none');
-  let enable = document.getElementById('disable')
-  disable.classList.add('display-none');
-}
-// TODO: SIMULATE ONE PLAYER VS IA AS WINNER TO CHECK IF I CAN GET THE WINNER AND THE COORDINATES
-
-// Testing set icon
-//setClassToLink(0,'o');
-//setClassToLink(1,'x');
-//setClassToLink(2,'o');
-//setClassToLink(3,'x');
-//setClassToLink(4,'o');
-//setClassToLink(5,'x');
-//setClassToLink(6,'o');
-//setClassToLink(7,'x');
-//setClassToLink(8,'o');
-
-// testing Done
-//drawFirstRowWinner();
-//drawSecondRowWinner();
-//drawThirdRowWinner();
-
-//drawFirstColumnWinner();
-//drawSecondColumnWinner();
-//drawThirdColumnWinner();
-
-//drawUpLeftToRightDownWinner();
-//drawUpRightToLeftDownWinner();
