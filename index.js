@@ -610,4 +610,4 @@ function showWinnerCanvas() {
   setVisibilityToDiv(winnerCanvasDiv, "show");
 }
 
-// TODO: TEST ALL POSIBLE WINNER OPORTUNITIES
+// TODO: SHOW WINNER AND DROW WHEN USING TWO PLAYERS
