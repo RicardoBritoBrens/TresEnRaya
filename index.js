@@ -182,11 +182,13 @@ function drawFirstColumnWinner() {
   completeDraw();
 }
 function drawSecondColumnWinner() {
+  debugger;
   showWinnerCanvas();
   drawVerticalWinnerGreenLine(2, context, width, height);
   completeDraw();
 }
 function drawThirdColumnWinner() {
+  debugger;
   showWinnerCanvas();
   drawVerticalWinnerGreenLine(3, context, width, height);
   completeDraw();
@@ -352,6 +354,7 @@ function getPlayerName() {
 }
 
 function isThereAWinner() {
+  //debugger;
   let tempWinnerBoard = board.slice();
   let playerOneMoves = tempWinnerBoard.filter((x) => x[1] === playerOne);
   let playerTwoMoves = tempWinnerBoard.filter((x) => x[1] === playerTwo);
@@ -385,7 +388,7 @@ function isThereAWinner() {
     }
   }
 
-  if (isThereAVerticalWinner(playerOneMoves, playerTwoMoves)) {
+  if (isThereAVerticalWinner(playerOneMoves, playerTwoMoves)) {    
     if (
       winnersMovesAndCoordinates[1].every((x) =>
         verticalWinnersMoves[0].includes(x)
@@ -462,16 +465,17 @@ function isThereAHorizontalWinner(playerOneMoves, playerTwoMoves) {
   return output;
 }
 
-function isThereAVerticalWinner(playerOneMoves, playerTwoMoves) {
+function isThereAVerticalWinner(playerOneMoves, playerTwoMoves) {  
   let output = false;
   if (
     verticalWinnersMoves.some((winnerMoves) =>
       winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
     )
   ) {
+    debugger;
     winnersMovesAndCoordinates = findWinnerDetails(
-      horizontalWinnersMoves,
-      playerTwoMoves
+      verticalWinnersMoves,
+      playerOneMoves
     );
     console.log("player one vertical winner won");
     output = true;
@@ -481,8 +485,9 @@ function isThereAVerticalWinner(playerOneMoves, playerTwoMoves) {
       winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
     )
   ) {
+    debugger;
     winnersMovesAndCoordinates = findWinnerDetails(
-      horizontalWinnersMoves,
+      verticalWinnersMoves,
       playerTwoMoves
     );
     console.log("player two vertical winner won");
@@ -537,11 +542,12 @@ function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
 }
 
 function findWinnerDetails(winnerMoves, playerMoves) {
+  debugger;
   let output = ["", []];
   for (let i = 0; i < winnerMoves.length; i++) {
-    let current = winnerMoves[i].every((x) =>
-      playerMoves.map((a) => a[0]).includes(x)
-    );
+    let test = winnerMoves[i];
+    console.log(test);
+    current = test.every((x) =>playerMoves.map((a) => a[0]).includes(x));
     if (current) {
       output = [playerMoves[0][1], winnerMoves[i]];
       console.log(`player:${playerMoves[0][1]}, coordinates:${winnerMoves[i]}`);
