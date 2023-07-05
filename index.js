@@ -418,7 +418,7 @@ function isThereAWinner() {
       winnersMovesAndCoordinates[1].every((x) =>
         upRightToLeftDownWinners[0].includes(x)
       )
-    ) {
+    ) {      
       drawUpRightToLeftDownWinner();
       return true;
     }
@@ -496,30 +496,32 @@ function isThereAVerticalWinner(playerOneMoves, playerTwoMoves) {
 }
 
 function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
+  
   let output = false;
   if (
-    upLeftRoRightDownWinners.some((winnerMoves) =>
+    upRightToLeftDownWinners.some((winnerMoves) =>
       winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
     )
   ) {
     winnersMovesAndCoordinates = findWinnerDetails(
-      upLeftRoRightDownWinners,
+      upRightToLeftDownWinners,
       playerOneMoves
     );
     console.log("player one right to left winner won");
-    output = true;
+    output = true;    
   }
+
   if (
-    upLeftRoRightDownWinners.some((winnerMoves) =>
+    upRightToLeftDownWinners.some((winnerMoves) =>
       winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
     )
   ) {
     winnersMovesAndCoordinates = findWinnerDetails(
-      upLeftRoRightDownWinners,
+      upRightToLeftDownWinners,
       playerTwoMoves
     );
     console.log("player two right to left winner won");
-    output = true;
+    output = true;    
   }
   return output;
 }
@@ -527,12 +529,12 @@ function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
 function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
   let output = false;
   if (
-    upRightToLeftDownWinners.some((winnerMoves) =>
+    upLeftRoRightDownWinners.some((winnerMoves) =>
       winnerMoves.every((x) => playerOneMoves.map((a) => a[0]).includes(x))
     )
   ) {
     winnersMovesAndCoordinates = findWinnerDetails(
-      upRightToLeftDownWinners,
+      upLeftRoRightDownWinners,
       playerOneMoves
     );
     console.log("player one left to right winner won");
@@ -540,12 +542,12 @@ function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
   }
 
   if (
-    upRightToLeftDownWinners.some((winnerMoves) =>
+    upLeftRoRightDownWinners.some((winnerMoves) =>
       winnerMoves.every((x) => playerTwoMoves.map((a) => a[0]).includes(x))
     )
   ) {
     winnersMovesAndCoordinates = findWinnerDetails(
-      upRightToLeftDownWinners,
+      upLeftRoRightDownWinners,
       playerTwoMoves
     );
     console.log("player two left to right winner won");
