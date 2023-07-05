@@ -557,9 +557,7 @@ function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
 function findWinnerDetails(winnerMoves, playerMoves) {
   let output = ["", []];
   for (let i = 0; i < winnerMoves.length; i++) {
-    let test = winnerMoves[i];
-    console.log(test);
-    current = test.every((x) => playerMoves.map((a) => a[0]).includes(x));
+    let current = winnerMoves[i].every((x) => playerMoves.map((a) => a[0]).includes(x));    
     if (current) {
       output = [playerMoves[0][1], winnerMoves[i]];
       console.log(`player:${playerMoves[0][1]}, coordinates:${winnerMoves[i]}`);
