@@ -18,7 +18,7 @@
   </head>
 
   <body class="body">
-    <div id="select-players-div" class="center-div">
+    <div id="select-players-div" class="select-players-div-space-between-elements center-div">
       <button class="btn-one" onclick="onePlayerVsIa()">
         Un Jugador vs IA
       </button>
@@ -26,33 +26,27 @@
     </div>
 
     <div id="select-player-icon-div" class="center-div display-none">
-      <h2 style="color: white">Select icon</h2>
-      <img
-        class="player-icon-image"
-        src="./assets/megaman-helmet-removebg-preview.png"
-        alt=""
-      />
-      <button onclick="useIconO()">Usar O</button>
-      <img
-        class="player-icon-image"
-        src="./assets/zero-helmet-removebg-preview.png"
-        alt=""
-      />
-      <button onclick="useIconX()">Usar X</button>
+      <div class="space-between-elements-select-player-icon">
+        <h2 style="color: white">Select icon</h2>
+        <img
+          class="player-icon-image"
+          src="./assets/megaman-helmet-removebg-preview.png"
+          alt=""
+        />
+        <button onclick="useIconO()">Usar O</button>
+        <img
+          class="player-icon-image"
+          src="./assets/zero-helmet-removebg-preview.png"
+          alt=""
+        />
+        <button onclick="useIconX()">Usar X</button>
+      </div>
     </div>
 
     <div id="board-div" class="board center-div display-none">
       <div
-        id="winner-canvas-div"
-        class="center-div-non-solid display-none"
-        style="width: 550px; height: 550px; background-color: transparent"
-      >
-        <canvas
-          id="canvas"
-          width="550px"
-          height="550px"
-          style="background-color: transparent"
-        ></canvas>
+        id="winner-canvas-div" class="center-div-non-solid display-none canvas-container">
+        <canvas id="canvas" class="canvas"></canvas>
       </div>
 
       <div id="board-inner-div" class="board-inner">

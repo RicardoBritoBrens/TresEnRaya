@@ -350,7 +350,6 @@ function getPlayerName() {
 }
 
 function isThereAWinner() {
-  //
   let tempWinnerBoard = board.slice();
   let playerOneMoves = tempWinnerBoard.filter((x) => x[1] === playerOne);
   let playerTwoMoves = tempWinnerBoard.filter((x) => x[1] === playerTwo);
@@ -611,3 +610,7 @@ function showWinnerCanvas() {
 }
 
 // TODO: SHOW WINNER AND DROW WHEN USING TWO PLAYERS
+
+// TODO: CHECK PHONE STYLE
+/*var width = document. getElementById('container'). style. width;
+var height = document. getElementById('container'). style. height;*/
