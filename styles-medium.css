@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:100&display=swap");
+
+/* Styles for screens with a maximum width of 1024px */
+@media (max-width: 1024px) {
+    .body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-image: url(https://wallpapercave.com/dwp1x/wp2794478.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: "Lato", sans-serif;
+      }      
+  }
