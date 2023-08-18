@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link rel="stylesheet" type="text/css" href="on-off-switch-button.css" />
-     <!-- Media-specific CSS files -->
-    <link rel="stylesheet" media="(max-width: 768px)" href="styles-small.css">
-    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="styles-medium.css">
-    <link rel="stylesheet" media="(min-width: 1025px)" href="styles-large.css">
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -45,8 +41,13 @@
 
     <div id="board-div" class="board center-div display-none">
       <div
-        id="winner-canvas-div" class="center-div-non-solid display-none canvas-container">
-        <canvas id="canvas" class="canvas"></canvas>
+        id="winner-canvas-div" class="center-div-non-solid display-none">
+        <canvas
+          id="canvas"
+          width="550px"
+          height="550px"
+          style="background-color: transparent"
+        ></canvas>
       </div>
 
       <div id="board-inner-div" class="board-inner">

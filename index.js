@@ -159,12 +159,12 @@ function setClassToLink(index, iconClass) {
 }
 
 // Draw winners rows
-function drawFirstRowWinner() {
+function drawFirstRowWinner() {    
   showWinnerCanvas();
   drawHorizontalWinnerGreenLine(1, context, width, height);
   completeDraw();
 }
-function drawSecondRowWinner() {
+function drawSecondRowWinner() {  
   showWinnerCanvas();
   drawHorizontalWinnerGreenLine(2, context, width, height);
   completeDraw();
