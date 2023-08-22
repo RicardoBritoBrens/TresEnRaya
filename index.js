@@ -122,6 +122,9 @@ function useIconX() {
   playerIcon = "x";
   if (players === 1) {
     machineIcon = "o";
+  }else{
+    
+    turn = playerss[0]
   }
   playAudio("megaman-3-death-sound-effect");
   setVisibilityToDiv(selectPlayerIconDivName, "hide");
@@ -131,6 +134,10 @@ function useIconO() {
   playerIcon = "o";
   if (players === 1) {
     machineIcon = "x";
+  }
+  else{
+    
+    turn = playerss[0]
   }
   playAudio("mm4-victory");
   setVisibilityToDiv(selectPlayerIconDivName, "hide");
@@ -332,6 +339,7 @@ function moveTo(coordinate) {
       machineAutoMove();
       break;
     case 8:
+      
       setClassToLink(8, getNextPlayerIcon());
       board[8] = [8, getPlayerName(), "F"];
       if (isThereAWinner()) {
@@ -345,13 +353,16 @@ function moveTo(coordinate) {
 }
 
 function getPlayerName() {
+  
   if (players === 1) {
     return playerOne;
-  } else if (turn === playerOne) {
-    turn = playerTwo;
-  } else if (turn === playerTwo) {
-    turn = playerOne;
-  }
+  } else {
+    if (turn === playerOne) {
+      turn = playerss[1];
+    } else if (turn === playerTwo) {
+      turn = playerss[0];
+    }    
+  }     
   return turn;
 }
 
