@@ -59,11 +59,11 @@
   }
 
   .o {
-    background-image: url(assets/o.png);
+    background-image: url(assets/images/o.png);
   }
 
   .x {
-    background-image: url(assets/x.png);
+    background-image: url(assets/images/x.png);
   }
 
   .you-win-div {
