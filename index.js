@@ -158,6 +158,10 @@ function setClassToLink(index, iconClass) {
   link.removeAttribute("onclick");
 }
 
+// =============================
+// Draw winner functions
+// =============================
+
 // Draw winners rows
 function drawFirstRowWinner() {    
   showWinnerCanvas();
@@ -258,8 +262,10 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
   }
 }
 
+// =============================
 // Board movements functions
-function moveTo(coordinate) {
+// =============================
+function moveTo(coordinate) {    
   switch (coordinate[0]) {
     case 0:
       setClassToLink(0, getNextPlayerIcon());
@@ -301,7 +307,7 @@ function moveTo(coordinate) {
       }
       machineAutoMove();
       break;
-    case 5:
+    case 5:      
       setClassToLink(5, getNextPlayerIcon());
       board[5] = [5, getPlayerName(), "F"];
       if (isThereAWinner()) {
@@ -610,7 +616,3 @@ function showWinnerCanvas() {
 }
 
 // TODO: SHOW WINNER AND DROW WHEN USING TWO PLAYERS
-
-// TODO: CHECK PHONE STYLE
-/*var width = document. getElementById('container'). style. width;
-var height = document. getElementById('container'). style. height;*/
