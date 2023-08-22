@@ -70,9 +70,9 @@ let height;
 // The toggle button function
 // =============================
 function toggleSoundOnOff() {
-  if (allowGameSounds === true) {
+  if (allowGameSounds == true) {
     allowGameSounds = false;
-  } else if (allowGameSounds === false) {
+  } else if (allowGameSounds == false) {
     allowGameSounds = true;
   }
 }
@@ -122,8 +122,8 @@ function useIconX() {
   playerIcon = "x";
   if (players === 1) {
     machineIcon = "o";
-  } else {
-
+  }else{
+    
     turn = playerss[0]
   }
   playAudio("megaman-3-death-sound-effect");
@@ -135,8 +135,8 @@ function useIconO() {
   if (players === 1) {
     machineIcon = "x";
   }
-  else {
-
+  else{
+    
     turn = playerss[0]
   }
   playAudio("mm4-victory");
@@ -170,12 +170,12 @@ function setClassToLink(index, iconClass) {
 // =============================
 
 // Draw winners rows
-function drawFirstRowWinner() {
+function drawFirstRowWinner() {    
   showWinnerCanvas();
   drawHorizontalWinnerGreenLine(1, context, width, height);
   completeDraw();
 }
-function drawSecondRowWinner() {
+function drawSecondRowWinner() {  
   showWinnerCanvas();
   drawHorizontalWinnerGreenLine(2, context, width, height);
   completeDraw();
@@ -272,7 +272,7 @@ function drawCornerWinnerGreenLine(orientation, context, width) {
 // =============================
 // Board movements functions
 // =============================
-function moveTo(coordinate) {
+function moveTo(coordinate) {    
   switch (coordinate[0]) {
     case 0:
       setClassToLink(0, getNextPlayerIcon());
@@ -314,7 +314,7 @@ function moveTo(coordinate) {
       }
       machineAutoMove();
       break;
-    case 5:
+    case 5:      
       setClassToLink(5, getNextPlayerIcon());
       board[5] = [5, getPlayerName(), "F"];
       if (isThereAWinner()) {
@@ -339,7 +339,7 @@ function moveTo(coordinate) {
       machineAutoMove();
       break;
     case 8:
-
+      
       setClassToLink(8, getNextPlayerIcon());
       board[8] = [8, getPlayerName(), "F"];
       if (isThereAWinner()) {
@@ -353,7 +353,7 @@ function moveTo(coordinate) {
 }
 
 function getPlayerName() {
-
+  
   if (players === 1) {
     return playerOne;
   } else {
@@ -361,8 +361,8 @@ function getPlayerName() {
       turn = playerss[1];
     } else if (turn === playerTwo) {
       turn = playerss[0];
-    }
-  }
+    }    
+  }     
   return turn;
 }
 
@@ -434,7 +434,7 @@ function isThereAWinner() {
       winnersMovesAndCoordinates[1].every((x) =>
         upRightToLeftDownWinners[0].includes(x)
       )
-    ) {
+    ) {      
       drawUpRightToLeftDownWinner();
       return true;
     }
@@ -512,7 +512,7 @@ function isThereAVerticalWinner(playerOneMoves, playerTwoMoves) {
 }
 
 function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
-
+  
   let output = false;
   if (
     upRightToLeftDownWinners.some((winnerMoves) =>
@@ -524,7 +524,7 @@ function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
       playerOneMoves
     );
     console.log("player one right to left winner won");
-    output = true;
+    output = true;    
   }
 
   if (
@@ -537,7 +537,7 @@ function isThereARightToLeftWinner(playerOneMoves, playerTwoMoves) {
       playerTwoMoves
     );
     console.log("player two right to left winner won");
-    output = true;
+    output = true;    
   }
   return output;
 }
@@ -575,7 +575,7 @@ function isThereALeftToRightWinner(playerOneMoves, playerTwoMoves) {
 function findWinnerDetails(winnerMoves, playerMoves) {
   let output = ["", []];
   for (let i = 0; i < winnerMoves.length; i++) {
-    let current = winnerMoves[i].every((x) => playerMoves.map((a) => a[0]).includes(x));
+    let current = winnerMoves[i].every((x) => playerMoves.map((a) => a[0]).includes(x));    
     if (current) {
       output = [playerMoves[0][1], winnerMoves[i]];
       console.log(`player:${playerMoves[0][1]}, coordinates:${winnerMoves[i]}`);
