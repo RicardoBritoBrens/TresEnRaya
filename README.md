@@ -1,26 +1,25 @@
-# Bienvenido al Juego del Tres en Raya! 🎮
+# Welcome to the Game of Tic-tac-toe! 🎮
 
-¡Hola a todos los entusiastas de los juegos! 👋 En este documento, vamos a explorar el emocionante mundo del **Tres en Raya** utilizando emojis para representar el tablero y las piezas. ¿Estás listo para el desafío? ¡Comencemos!
+Hello to all gaming enthusiasts! 👋
 
-## ¿Qué es el Tres en Raya? 🤔
+## ¿What is Tic-tac-toe? 🤔
 
-El **Tres en Raya** es un juego clásico que se juega en un tablero de 3x3 casillas. Dos jugadores compiten por ser el primero en formar una línea de tres de sus propias piezas en horizontal, vertical o diagonal. Un jugador utiliza ❌ como pieza y el otro utiliza ⭕.
+The **Three in a Row** is a classic game that is played on a board of 3x3 squares. Two players compete to be the first to form a line of three of their own pieces horizontally, vertically or diagonally. One player uses as a piece ❌ and the other uses ⭕.
 
-## ¡Hora de Jugar! 🕹️
+## Time to Play! 🕹️
 
-Aquí tienes el tablero de juego:  
+Here's the game board:  
 
 ❌ | ⭕ | ❌  
 ⭕ | ❌ | ⭕  
 ❌ | ⭕ | ❌  
 
-Los jugadores se turnan para colocar sus piezas en las casillas vacías. El objetivo es lograr una línea de tres de tus propias piezas antes que tu oponente.
+Players take turns placing their pieces in the empty squares. The goal is to achieve a line of three of your own pieces before your opponent.
 
-## Reglas Básicas 📜
+## Basic Rules  📜
+1. Players take turns placing their pieces in empty squares.
+2. You can place your piece ❌ or ⭕ in any empty box.
+3. The first player to form a horizontal, vertical or diagonal line of three of his pieces wins.
+4. If all the squares are filled and no one has achieved a line of three, the game ends in a draw.   
 
-1. Los jugadores se turnan para colocar sus piezas en casillas vacías.
-2. Puedes colocar tu pieza ❌ o ⭕ en cualquier casilla vacía.
-3. El primer jugador en formar una línea horizontal, vertical o diagonal de tres de sus piezas gana.
-4. Si todas las casillas se llenan y nadie ha logrado una línea de tres, el juego termina en empate.
-
-¡Diviértete jugando al Tres en Raya! Recuerda usar estrategia y anticipar los movimientos de tu oponente. ¡Que gane el mejor! 🏆
+Have fun playing **Tic-tac-toe**! Remember to use strategy and anticipate your opponent's moves. May the best win! 🏆
